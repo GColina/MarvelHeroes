@@ -9,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.gcolina.marvelheroes.presentation.home.HomeScreen
+import com.gcolina.marvelheroes.presentation.splash.SplashScreen
 
 
 @Composable
@@ -41,7 +43,18 @@ fun NavigationWrapper(){
             ) + fadeOut(animationSpec = tween(700))
         }) {
         composable<Splash_Screen>{
-
+            SplashScreen(
+                navigateToHome = {
+                    navController.navigate(Home_Screen)
+                }
+            )
+        }
+        composable<Home_Screen>{
+            HomeScreen(
+                navigateToDetail = {
+                    navController.navigate(Detail_Screen)
+                }
+            )
         }
     }
 

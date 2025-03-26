@@ -41,6 +41,7 @@ fun MarvelHeroesTheme(
     content: @Composable () -> Unit
 ) {
     //TODO  Estoy forzando el tema oscuro, me gusta mas.
+
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
