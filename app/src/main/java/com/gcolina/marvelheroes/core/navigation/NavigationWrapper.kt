@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.gcolina.marvelheroes.presentation.detail.view.DetailScreen
 import com.gcolina.marvelheroes.presentation.home.view.HomeScreen
 import com.gcolina.marvelheroes.presentation.splash.SplashScreen
 
@@ -55,6 +56,11 @@ fun NavigationWrapper(){
                     navController.navigate(Detail_Screen)
                 }
             )
+        }
+        composable<Detail_Screen> {
+            DetailScreen {
+                navController.popBackStack()
+            }
         }
     }
 

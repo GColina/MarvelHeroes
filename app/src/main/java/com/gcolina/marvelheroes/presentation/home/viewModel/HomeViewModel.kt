@@ -38,6 +38,11 @@ class HomeViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    fun onLoadMore() {
+        //Aqui gestionare la Paginacion
+
+    }
+
 
 }
 

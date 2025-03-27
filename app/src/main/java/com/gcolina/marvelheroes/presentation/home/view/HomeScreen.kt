@@ -9,12 +9,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,11 +34,21 @@ import com.gcolina.marvelheroes.presentation.home.viewModel.HomeViewModel
 @Composable
 fun HomeScreen(navigateToDetail: () -> Unit, homeViewModel: HomeViewModel = hiltViewModel()) {
 
+    val uiState by homeViewModel.uiState.collectAsState()
+    val listState = rememberLazyListState()
+
     LaunchedEffect(Unit) {
         homeViewModel.fetchData()
     }
 
-    val uiState by homeViewModel.uiState.collectAsState()
+    LaunchedEffect(listState) {
+        snapshotFlow { listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index }.collect { lastVisibleIndex ->
+            if (lastVisibleIndex != null && lastVisibleIndex >= uiState.heroes.size - 2) {
+                homeViewModel.onLoadMore()
+            }
+        }
+    }
+
 
 
     Column(
